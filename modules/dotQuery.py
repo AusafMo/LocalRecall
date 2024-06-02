@@ -29,10 +29,10 @@ def getProcImage(imgs: np.ndarray):
     return proc_img
 
 def dotQuery(inputText:str = None, ids:list = None, topk = 1, includeDistance = False, 
-             includeVector = False, metadataFilter:list = None, inId:list = None, pineCone = False):
+             includeVector = False, metadataFilter:list = None, inId:list = None, pineCone = False,
+             negative_text = None):  
     
     conn, cur = getConections()
-
     index = getIndex()
     
     model = getClipModel()
@@ -44,8 +44,15 @@ def dotQuery(inputText:str = None, ids:list = None, topk = 1, includeDistance = 
     inputs = processor(text = inputText, return_tensors="pt", padding=True)
     text_features = model.get_text_features(**inputs)
     text_features = text_features / text_features.norm(dim=-1, keepdim=True)
-    text_features = text_features.tolist()[0]
     
+    if negative_text:
+        print('Negative text found')
+        inputs = processor(text = negative_text, return_tensors="pt", padding=True)
+        neg_features = model.get_text_features(**inputs)
+        neg_features = neg_features / neg_features.norm(dim=-1, keepdim=True)
+        text_features = text_features - neg_features
+
+    text_features = text_features.tolist()[0]
     if pineCone:
 
         pineres = index.query(vector = text_features, top_k = topk, 
