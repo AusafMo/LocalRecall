@@ -8,21 +8,6 @@ from modules.getConn import getIndex
 from modules.getEmbeddings import getProcessor, getClipModel, prepMeta
 
 
-# def getProcessor():
-#     processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch16")
-#     return processor
-
-# def prepMeta(dir : str = 'snaps'):
-#     files = os.listdir(dir)
-#     meta = []
-#     for file in files:
-#         meta.append(file.split('.png')[0].strip())
-#     return meta
-
-# def getClipModel():
-#     return CLIPModel.from_pretrained("openai/clip-vit-base-patch16")
-
-
 def getProcImage(imgs: np.ndarray):
     processor = getProcessor()
     size = {'height': 224, 'width': 224}
