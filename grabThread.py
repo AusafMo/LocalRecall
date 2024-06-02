@@ -1,0 +1,5 @@
+from modules.screenCap import start_screenshot_thread, stop_screenshot_thread_func
+
+start_screenshot_thread()
+
+stop_screenshot_thread_func()

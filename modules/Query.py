@@ -107,3 +107,22 @@ def dotQuery(inputText:str = None, ids:list = None, topk = 1, includeDistance = 
     return {
         'pgVector': x
     }
+
+def getAllVectors(ids = None):
+    conn, cur = getConections()
+    if ids is None:
+        cur.execute("SELECT * FROM vectors")
+        
+    elif isinstance(id, list):
+        cur.execute(f"SELECT * FROM vectors WHERE id IN {tuple(id)}")
+    rows = cur.fetchall()
+    
+    cur.close(), conn.close()
+    return rows
+
+def deleteAllVectors():
+    conn, cur = getConections()
+    cur.execute("DELETE FROM vectors")
+    conn.commit()
+    cur.close(), conn.close()
+    

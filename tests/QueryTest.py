@@ -3,7 +3,7 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from modules.dotQuery import dotQuery
+from modules.Query import dotQuery
 from modules.getConn import getConections
 
 class TestDotQuery(unittest.TestCase):
